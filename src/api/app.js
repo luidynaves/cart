@@ -1,6 +1,7 @@
 'use strict';
 
 const Hapi = require('hapi');
+const mongoConfig = require('../config/mongoConfig');
 
 const server = new Hapi.Server();
 
@@ -8,12 +9,33 @@ const controllers = require('./controllers');
 
 server.connection({ port: 1337, host: '127.0.0.1' });
 
-server.route(controllers);
+const dbOpts = {
+    url: `mongodb://${mongoConfig.hostname}:${mongoConfig.port}/${mongoConfig.pathname}`,
+    settings: {
+        poolSize: 10
+    },
+    decorate: true
+};
 
-server.start((err) => {
-    if (err) {
-        throw err;
-    }
+server.register(
+    {
+        register: require('hapi-mongodb'),
+        options: dbOpts
+    }, 
+    function(err) {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+    },
 
-    console.log(`Server running at ${server.info.uri}`);
-});
+    server.route(controllers),
+
+    server.start((err) => {
+        if (err) {
+            throw err;
+        }
+
+        console.log(`Server running at ${server.info.uri}`);
+    })
+);
