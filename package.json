@@ -28,7 +28,10 @@
     "bluebird": "^3.4.7",
     "hapi": "^16.1.0",
     "hapi-mongodb": "^6.2.1",
+    "hapi-swagger": "^7.7.0",
+    "inert": "^4.1.0",
     "joi": "^10.2.1",
-    "mongoose": "^4.8.4"
+    "mongoose": "^4.8.4",
+    "vision": "^4.1.1"
   }
 }

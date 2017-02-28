@@ -7,12 +7,13 @@ let controller = new Controller();
 
 module.exports = [
         {
-            method: 'GET',
+            method: 'POST',
             path: '/cart',
             config: {
+                tags: [ 'api' ],
                 auth: false,
                 handler: controller.addItem,
-                //validate: Validator.addItem()
+                validate: Validator.addItem()
             }
         }
     ];
